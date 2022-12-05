@@ -36,6 +36,7 @@ class Sprite {
         this.color = color
         this.isAttackingUp
         this.isAttackingDown
+        this.health = 100
     }
 
     draw(){
@@ -100,7 +101,7 @@ const player = new Sprite({
         x: 0,
         y: 0
     },
-    color: 'blue',
+    color: 'brown',
     offset: {
         x: 0,
         y: 0
@@ -151,6 +152,7 @@ const keys = {
     },
 }
 
+//Coliciones de los ataques
 function collitionRectUp({collRect1, collRect2}){
     return(
         collRect1.attackBoxUp.position.x + collRect1.attackBoxUp.width >= collRect2.position.x
@@ -159,7 +161,6 @@ function collitionRectUp({collRect1, collRect2}){
         && collRect1.attackBoxUp.position.y <= collRect2.position.y + collRect2.height
     )
 }
-//FIXME: Error golpe bajo no registrandose
 function collitionRectDown({collRect1, collRect2}){
     return(
         collRect1.attackBoxDown.position.x + collRect1.attackBoxDown.width >= collRect2.position.x
@@ -168,6 +169,35 @@ function collitionRectDown({collRect1, collRect2}){
         && collRect1.attackBoxDown.position.y <= collRect2.position.y + collRect2.height
     )
 }
+
+//Ganador
+function Ganador({player, enemy, timerId}){
+    clearTimeout(timerId)
+    document.querySelector('#displayText').style.display = 'flex'
+    if(player.health === enemy.health){
+        document.querySelector('#displayText').innerHTML = 'Empate'
+    }else if (player.health > enemy.health){
+        document.querySelector('#displayText').innerHTML = 'Jugador 1 Gana'
+    }else if (player.health > enemy.health){
+        document.querySelector('#displayText').innerHTML = 'Jugador 2 Gana'
+    }
+}
+
+//Timer
+let timer = 60
+let timerId
+function timerDecrease(){
+    if(timer > 0){
+        timerId = setTimeout(timerDecrease, 1000)
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+    }
+
+    if(timer === 0){
+        Ganador({player, enemy})
+    }
+}
+timerDecrease()
 
 //Animacion de movimientos
 function animate(){
@@ -202,15 +232,19 @@ function animate(){
         && player.isAttackingUp){
             
         player.isAttackingUp = false
-        console.log('attack')
+        enemy.health -= 10
+        document.querySelector('#enemy-health').style.width = enemy.health + '%'
+        //console.log('attack')
     }
     //Golpe bajo
     if(collitionRectDown({collRect1: player, 
                           collRect2: enemy})
         && player.isAttackingDown){
 
+        enemy.health -= 10
+        document.querySelector('#enemy-health').style.width = enemy.health + '%'
         player.isAttackingDown = false
-        console.log('attack')
+        //console.log('attack')
     }
 
     //Player 2
@@ -218,16 +252,25 @@ function animate(){
                         collRect2: player}) 
         && enemy.isAttackingUp){
             
+        player.health -= 10
+        document.querySelector('#player-health').style.width = player.health + '%'
         enemy.isAttackingUp = false
-        console.log('attack')
+        //console.log('attack')
     }
     //Golpe bajo
     if(collitionRectDown({collRect1: enemy, 
                           collRect2: player})
         && enemy.isAttackingDown){
 
+        player.health -= 10
+        document.querySelector('#player-health').style.width = player.health + '%'
         enemy.isAttackingDown = false
-        console.log('attack')
+        //console.log('attack')
+    }
+
+    //Final
+    if(enemy.health <=0 || player.health <=0){
+        Ganador({player, enemy, timerId})
     }
 }
 
