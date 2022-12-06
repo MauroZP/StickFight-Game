@@ -91,6 +91,111 @@ class Sprite {
     
 }
 
+//Movimiento "automatico" del enemigo
+let timerMov = 2000
+function enemyMovement (){
+    for(i=0; i<=10; i++){
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowLeft",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        timerMov += 500
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keyup", {
+                    key: "ArrowLeft",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        timerMov += 100
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "4",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        timerMov += 50
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keyup", {
+                    key: "4",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        //
+        timerMov += 50
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowUp",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        timerMov += 20
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keyup", {
+                    key: "ArrowUp",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        timerMov += 30
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "ArrowRight",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        timerMov += 350
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keyup", {
+                    key: "ArrowRight",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov);
+        setTimeout(() => {
+            document.dispatchEvent(
+                new KeyboardEvent("keydown", {
+                    key: "5",
+                    ctrlKey: true,
+                    bubbles: true,
+                    metaKey: true   
+                }),
+            );
+        }, timerMov-50);
+    }
+}
+
 //Constantes
 const player = new Sprite({
     position: {
@@ -178,9 +283,13 @@ function Ganador({player, enemy, timerId}){
         document.querySelector('#displayText').innerHTML = 'Empate'
     }else if (player.health > enemy.health){
         document.querySelector('#displayText').innerHTML = 'Jugador 1 Gana'
-    }else if (player.health > enemy.health){
+    }else if (player.health < enemy.health){
         document.querySelector('#displayText').innerHTML = 'Jugador 2 Gana'
     }
+
+    setTimeout(() => {
+        document.location.reload();
+    }, 5000);
 }
 
 //Timer
@@ -275,6 +384,7 @@ function animate(){
 }
 
 animate()
+enemyMovement()
 
 //Chequeo de las teclas
 window.addEventListener('keydown', (event) => {
@@ -351,3 +461,4 @@ window.addEventListener('keyup', (event) => {
             break
     }
 })
+

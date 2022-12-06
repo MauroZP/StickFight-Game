@@ -1,31 +1,27 @@
 <html>
     <head>
-        <style>
-            *{
-                box-sizing: border-box;
-            }
-        </style>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <!--Container central-->
-        <div style="position:absolute; display: inline-block;">
-            <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
+        <div class="background-div">
+            <div class="healtbar">
                 <!--Player-->
-                <div style="position: relative; height: 30px; width: 100%; display: flex; justify-content: flex-end;">
-                    <div style="background-color: yellow; height: 30px; width: 100%;"></div>
-                    <div id="player-health" style="position: absolute; background:blue; top: 0; right: 0; bottom: 0; width: 100%;"></div>
+                <div class="player-healthbar">
+                    <div class="background-healt"></div>
+                    <div id="player-health" class="player-healthbar-style"></div>
                 </div>
                 <!--Separacion-->
-                <div id="timer" style="background-color: red; height: 100; width: 100; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                <div id="timer" class="timerCss">
                     60
                 </div>
                 <!--Player2-->
-                <div style="position: relative; height: 30px; width: 100%;">
-                    <div style="background-color: yellow; height: 30px;"></div>
-                    <div id="enemy-health" style="position: absolute; background:blue; top: 0; right: 0; left: 0; bottom: 0;"></div>
+                <div class="enemy-healthbar">
+                    <div class="background-healt"></div>
+                    <div id="enemy-health" class="enemy-healthbar-style"></div>
                 </div>
             </div>
-            <div id="displayText" style="position: absolute; color:white; align-items: center; justify-content: center; top: 0; right: 0; left: 0; bottom: 0; display: none;">Empate</div>
+            <div id="displayText" class="displayTextCss">Empate</div>
             <canvas></canvas>
         </div>
 
